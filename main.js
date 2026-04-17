@@ -1,13 +1,11 @@
 /* =====================================================
-   TIMELESS TRIPS — main.js v4
-   Fixes: dropdown hover gap, email + WhatsApp form,
-   scroll reveal, lightbox, stat counters
-   Email via EmailJS (free) → info.frenzyowl@gmail.com
+   TIMELESS TRIPS — main.js v5
+   Fixes: mobile dropdown, email+WA form, all interactions
    ===================================================== */
 (function () {
   'use strict';
 
-  /* ─── 1. Sticky header shadow ─────────────────────── */
+  /* ─── 1. Sticky header ───────────────────────────── */
   const header = document.getElementById('site-header');
   if (header) {
     const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 60);
@@ -15,46 +13,33 @@
     onScroll();
   }
 
-  /* ─── 2. Desktop Dropdowns (hover with safe bridge) ── */
+  /* ─── 2. Desktop Dropdown (hover + bridge) ───────── */
   function initDesktopDropdowns() {
     document.querySelectorAll('.has-dropdown').forEach(item => {
-      let closeTimer;
-
-      const openMenu = () => {
-        clearTimeout(closeTimer);
-        document.querySelectorAll('.has-dropdown.open').forEach(el => {
-          if (el !== item) el.classList.remove('open');
-        });
-        item.classList.add('open');
-      };
-
-      const closeMenu = () => {
-        closeTimer = setTimeout(() => item.classList.remove('open'), 120);
-      };
-
-      item.addEventListener('mouseenter', openMenu);
-      item.addEventListener('mouseleave', closeMenu);
-
+      let timer;
       const dd = item.querySelector('.dropdown');
+      const open  = () => { clearTimeout(timer); document.querySelectorAll('.has-dropdown.open').forEach(el => { if (el !== item) el.classList.remove('open'); }); item.classList.add('open'); };
+      const close = () => { timer = setTimeout(() => item.classList.remove('open'), 120); };
+      item.addEventListener('mouseenter', open);
+      item.addEventListener('mouseleave', close);
       if (dd) {
-        dd.addEventListener('mouseenter', () => clearTimeout(closeTimer));
-        dd.addEventListener('mouseleave', closeMenu);
+        dd.addEventListener('mouseenter', () => clearTimeout(timer));
+        dd.addEventListener('mouseleave', close);
       }
     });
   }
 
-  /* ─── 3. Mobile Nav ───────────────────────────────── */
+  /* ─── 3. Mobile Nav ──────────────────────────────── */
   const navToggle = document.getElementById('nav-toggle');
   const mainNav   = document.getElementById('main-nav');
 
   function closeNav() {
     if (!mainNav) return;
     mainNav.classList.remove('open');
-    if (navToggle) {
-      navToggle.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    }
+    if (navToggle) { navToggle.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); }
     document.body.style.overflow = '';
+    // Close all submenus too
+    document.querySelectorAll('.has-dropdown.open').forEach(el => el.classList.remove('open'));
   }
 
   if (navToggle && mainNav) {
@@ -64,49 +49,49 @@
       navToggle.setAttribute('aria-expanded', String(isOpen));
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-
-    document.addEventListener('click', e => {
-      if (!navToggle.contains(e.target) && !mainNav.contains(e.target)) closeNav();
-    });
+    document.addEventListener('click', e => { if (!navToggle.contains(e.target) && !mainNav.contains(e.target)) closeNav(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
-    // Mobile accordion dropdowns
-    document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+    // Mobile accordion — dropdown trigger click
+    mainNav.querySelectorAll('.dropdown-trigger').forEach(trigger => {
       trigger.addEventListener('click', e => {
         if (window.innerWidth <= 768) {
           e.preventDefault();
+          e.stopPropagation();
           const parent = trigger.closest('.has-dropdown');
-          document.querySelectorAll('.has-dropdown.open').forEach(el => {
-            if (el !== parent) el.classList.remove('open');
-          });
-          parent.classList.toggle('open');
+          const isOpen = parent.classList.contains('open');
+          // Close all others
+          document.querySelectorAll('.has-dropdown.open').forEach(el => { if (el !== parent) el.classList.remove('open'); });
+          parent.classList.toggle('open', !isOpen);
         }
       });
     });
 
+    // Close nav on non-dropdown leaf link click (mobile)
     mainNav.querySelectorAll('a:not(.dropdown-trigger)').forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth <= 768) closeNav();
-      });
+      link.addEventListener('click', () => { if (window.innerWidth <= 768) closeNav(); });
     });
   }
 
-  // Init desktop dropdowns on load; re-run on resize
+  // Init desktop dropdowns on load
   function handleViewport() {
     if (window.innerWidth > 768) initDesktopDropdowns();
   }
   handleViewport();
-  window.addEventListener('resize', handleViewport, { passive: true });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) { document.body.style.overflow = ''; }
+    handleViewport();
+  }, { passive: true });
 
-  /* ─── 4. Active nav link ──────────────────────────── */
+  /* ─── 4. Active nav link ─────────────────────────── */
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-list > li > a:not(.nav-book-btn):not(.nav-call-btn)').forEach(link => {
     if (link.getAttribute('href') === currentPage) link.classList.add('active');
   });
 
-  /* ─── 5. Scroll Reveal ────────────────────────────── */
+  /* ─── 5. Scroll Reveal ───────────────────────────── */
   const revealEls = document.querySelectorAll(
-    '.pkg-card, .cat-card, .why-card, .testi-card, .how-step, .gal-item, .value-card, .reveal'
+    '.pkg-card,.cat-card,.why-card,.testi-card,.how-step,.gal-item,.value-card,.reveal'
   );
   if ('IntersectionObserver' in window && revealEls.length) {
     const io = new IntersectionObserver(entries => {
@@ -114,159 +99,118 @@
         if (!entry.isIntersecting) return;
         const idx = [...revealEls].indexOf(entry.target);
         setTimeout(() => {
-          entry.target.style.opacity  = '1';
+          entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
           entry.target.classList.add('visible');
-        }, (idx % 4) * 90);
+        }, (idx % 4) * 80);
         io.unobserve(entry.target);
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
-
     revealEls.forEach(el => {
       if (el.classList.contains('visible')) return;
-      el.style.opacity   = '0';
-      el.style.transform = 'translateY(28px)';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
       el.style.transition = 'opacity .6s ease, transform .6s ease';
       io.observe(el);
     });
   }
 
-  /* ─── 6. Lightbox ─────────────────────────────────── */
+  /* ─── 6. Lightbox ────────────────────────────────── */
   const lb = document.createElement('div');
   lb.className = 'lightbox';
-  lb.innerHTML = '<button class="lb-close" aria-label="Close image">&times;</button><img src="" alt="" />';
+  lb.innerHTML = '<button class="lb-close" aria-label="Close">&times;</button><img src="" alt="" />';
   document.body.appendChild(lb);
   const lbImg = lb.querySelector('img');
-  const lbClose = lb.querySelector('.lb-close');
 
-  function openLightbox(src, alt) {
-    lbImg.src = src; lbImg.alt = alt || '';
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => { lbImg.src = ''; }, 300);
-  }
+  const openLightbox = (src, alt) => { lbImg.src = src; lbImg.alt = alt||''; lb.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  const closeLightbox = () => { lb.classList.remove('open'); document.body.style.overflow = ''; setTimeout(() => lbImg.src='', 300); };
 
-  lbClose.addEventListener('click', closeLightbox);
+  lb.querySelector('.lb-close').addEventListener('click', closeLightbox);
   lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox();
-  });
-
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox(); });
   document.querySelectorAll('.gal-item img, .pkg-gallery-thumbs img').forEach(img => {
     img.style.cursor = 'zoom-in';
     img.addEventListener('click', () => openLightbox(img.src, img.alt));
   });
 
-  /* ─── 7. Toast notification ───────────────────────── */
-  let toastEl = null;
-  let toastTimer = null;
-
+  /* ─── 7. Toast ───────────────────────────────────── */
+  let toastEl, toastTimer;
   function showToast(msg, type = 'info', ms = 5000) {
-    if (!toastEl) {
-      toastEl = document.createElement('div');
-      toastEl.className = 'toast';
-      document.body.appendChild(toastEl);
-    }
-    const colours = { success: '#0d7377', error: '#c0392b', info: '#1a1a18' };
-    toastEl.style.borderLeftColor = colours[type] || colours.info;
+    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
+    const colors = { success:'#0d7377', error:'#c0392b', info:'#1a1a18' };
+    toastEl.style.borderLeftColor = colors[type] || colors.info;
     toastEl.textContent = msg;
     toastEl.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), ms);
   }
 
-  /* ─── 8. Form → WhatsApp + Email ──────────────────── */
+  /* ─── 8. Form → WhatsApp + Email ─────────────────── */
   /*
-     Email is sent via EmailJS (https://www.emailjs.com — free tier: 200 emails/month).
-     HOW TO ACTIVATE EMAIL:
-     1. Create free account at emailjs.com
-     2. Connect Gmail (info.frenzyowl@gmail.com) as email service
-     3. Create an email template — note your: SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY
-     4. Replace the three placeholder strings below with your actual IDs
-     Until configured, the form still sends via WhatsApp (always works).
+    EMAIL SETUP (free, 200/month):
+    1. Create account at emailjs.com
+    2. Connect Gmail (info@timelesstrips.in) as Email Service
+    3. Create template with fields: from_name, from_mobile, package_name,
+       travel_date, pax_count, message, to_email
+    4. Replace the 3 placeholders below with your actual IDs
   */
-  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_abc123'
-  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xyz789'
-  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // e.g. 'abcDEFghiJKL'
-  const EMAIL_CONFIGURED    = (EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID');
+  const EMAILJS_SERVICE  = 'YOUR_SERVICE_ID';
+  const EMAILJS_TEMPLATE = 'YOUR_TEMPLATE_ID';
+  const EMAILJS_KEY      = 'YOUR_PUBLIC_KEY';
+  const EMAIL_ON         = EMAILJS_SERVICE !== 'YOUR_SERVICE_ID';
 
-  // Lazy-load EmailJS only if configured
-  if (EMAIL_CONFIGURED) {
+  if (EMAIL_ON) {
     const s = document.createElement('script');
     s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    s.onload = () => window.emailjs && window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    s.onload = () => window.emailjs && emailjs.init({ publicKey: EMAILJS_KEY });
     document.head.appendChild(s);
   }
 
   document.querySelectorAll('.enquiry-form').forEach(form => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
+      const g = n => (form.querySelector(`[name="${n}"]`)?.value || '').trim();
+      const name = g('name'), mobile = g('mobile'), pkg = g('package') || 'a package';
+      const dates = g('dates'), pax = g('pax'), message = g('message');
 
-      const get = name => (form.querySelector(`[name="${name}"]`)?.value || '').trim();
-      const name    = get('name');
-      const mobile  = get('mobile');
-      const pkg     = get('package') || 'a package';
-      const dates   = get('dates');
-      const pax     = get('pax');
-      const message = get('message');
-
-      // Validation
-      if (!name) { showToast('⚠️ Please enter your name.', 'error'); return; }
-      if (!mobile || !/^[6-9]\d{9}$/.test(mobile.replace(/[\s+\-()]/g, ''))) {
-        showToast('⚠️ Please enter a valid 10-digit Indian mobile number.', 'error');
-        return;
+      if (!name)   { showToast('⚠️ Please enter your name.', 'error'); return; }
+      const cleanMobile = mobile.replace(/[\s+\-()]/g,'');
+      if (!cleanMobile || !/^[6-9]\d{9}$/.test(cleanMobile)) {
+        showToast('⚠️ Enter a valid 10-digit Indian mobile number.', 'error'); return;
       }
 
-      // Disable submit button
       const btn = form.querySelector('[type="submit"]');
-      const origText = btn.innerHTML;
+      const origHTML = btn.innerHTML;
       btn.disabled = true;
-      btn.innerHTML = '⏳ Sending…';
+      btn.innerHTML = '&#8987; Sending…';
 
-      // Build WhatsApp message
+      // Build WA message
       let waMsg = `Hi! I'm *${name}* and I'm interested in *${pkg}*.`;
       if (dates)   waMsg += ` Travel date: ${dates}.`;
       if (pax)     waMsg += ` Travellers: ${pax}.`;
       if (message) waMsg += ` Note: ${message}.`;
-      waMsg += ` My number: ${mobile}.`;
+      waMsg += ` My number: ${mobile}. Please share details and pricing.`;
 
-      // 1. Always open WhatsApp
-      window.open(
-        `https://api.whatsapp.com/send/?phone=918396000504&text=${encodeURIComponent(waMsg)}`,
-        '_blank', 'noopener,noreferrer'
-      );
+      // 1. Open WhatsApp
+      window.open(`https://api.whatsapp.com/send/?phone=918396000504&text=${encodeURIComponent(waMsg)}`, '_blank', 'noopener,noreferrer');
 
-      // 2. Send email if EmailJS is configured
-      if (EMAIL_CONFIGURED && window.emailjs) {
+      // 2. Email if configured
+      if (EMAIL_ON && window.emailjs) {
         try {
-          await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-            from_name:    name,
-            from_mobile:  mobile,
-            package_name: pkg,
-            travel_date:  dates  || 'Not specified',
-            pax_count:    pax    || 'Not specified',
-            message:      message || 'None',
-            to_email:     'info.frenzyowl@gmail.com',
-            reply_to:     mobile
+          await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+            from_name: name, from_mobile: mobile, package_name: pkg,
+            travel_date: dates || 'Not specified', pax_count: pax || 'Not specified',
+            message: message || 'None', to_email: 'info@timelesstrips.in'
           });
-          showToast('✅ Enquiry sent! WhatsApp opened & email delivered.', 'success');
+          showToast('✅ WhatsApp opened & email sent!', 'success');
         } catch (err) {
-          console.warn('EmailJS error:', err);
-          showToast('✅ WhatsApp opened! Email sending failed — we\'ll respond via WhatsApp.', 'info');
+          showToast('✅ WhatsApp opened — we respond in minutes!', 'success');
         }
       } else {
-        showToast('✅ WhatsApp opened — we\'ll respond within minutes!', 'success');
+        showToast('✅ WhatsApp opened — we respond in minutes!', 'success');
       }
 
-      // Re-enable button after 3s
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.innerHTML = origText;
-      }, 3000);
+      setTimeout(() => { btn.disabled = false; btn.innerHTML = origHTML; }, 3000);
     });
   });
 
@@ -282,17 +226,16 @@
     });
   });
 
-  /* ─── 10. Stat counter animation ─────────────────── */
+  /* ─── 10. Stat counter ───────────────────────────── */
   document.querySelectorAll('.stat-num').forEach(el => {
     const raw = el.textContent.trim();
     const match = raw.match(/[\d,]+/);
     if (!match) return;
-    const target = parseInt(match[0].replace(/,/g, ''), 10);
+    const target = parseInt(match[0].replace(/,/g,''), 10);
     const suffix = raw.replace(match[0], '');
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
-      let cur = 0;
-      const step = Math.ceil(target / 55);
+      let cur = 0; const step = Math.ceil(target/55);
       const t = setInterval(() => {
         cur = Math.min(cur + step, target);
         el.textContent = cur.toLocaleString('en-IN') + suffix;
@@ -303,11 +246,11 @@
     io.observe(el);
   });
 
-  /* ─── 11. Input: readonly fields subtle style ──── */
+  /* ─── 11. Readonly inputs styling ─────────────────── */
   document.querySelectorAll('input[readonly]').forEach(inp => {
     inp.style.background = 'var(--warm-bg)';
-    inp.style.cursor     = 'default';
-    inp.style.color      = 'var(--muted)';
+    inp.style.cursor = 'default';
+    inp.style.color = 'var(--muted)';
   });
 
 })();
