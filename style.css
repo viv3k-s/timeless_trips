@@ -1101,6 +1101,24 @@ button  { font-family: inherit; }
   .booking-sidebar { position: static; }
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+
+  /* ── Package detail page fixes @ 768px ── */
+  .pkg-detail-hero {
+    padding: 3rem 1.25rem 2.25rem;
+    margin-top: 64px;
+  }
+  .pkg-detail-hero h1 { font-size: clamp(1.75rem,4.5vw,2.4rem); }
+  .pkg-meta-bar { gap: .5rem; }
+  .pkg-meta-bar span { font-size: .78rem; padding: .3rem .8rem; }
+  .pkg-detail-grid { padding: 2rem 0 3.5rem; gap: 2rem; }
+  .pkg-gallery-thumbs { grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: 2rem; }
+  .pkg-gallery-thumbs img:first-child { grid-column: span 2; aspect-ratio: 16/9; }
+  .itinerary-day { padding: 1.25rem 1.25rem 1.25rem 1.5rem; }
+  .incl-excl-grid { gap: 1rem; margin: 1.75rem 0; }
+  .incl-box { padding: 1.25rem; }
+  .sidebar-top .price-val { font-size: 2.1rem; }
+  .sidebar-body { padding: 1.25rem; }
+  .sidebar-features { padding: 1rem 1.25rem 1.25rem; }
 }
 
 /* ── Dropdown Home Link ── */
@@ -1158,5 +1176,132 @@ button  { font-family: inherit; }
   .stat-num { font-size:2rem; }
   .dest-hero { padding:4rem 1.25rem 3rem; }
   .testimonials-grid { grid-template-columns:1fr; }
+
+  /* ── Package detail hero ── */
+  .pkg-detail-hero {
+    padding: 2.5rem 1rem 2rem;
+    margin-top: 60px;
+  }
+  .pkg-detail-hero h1 {
+    font-size: 1.65rem;
+    line-height: 1.2;
+    margin-bottom: .75rem;
+  }
+  .pkg-meta-bar {
+    gap: .4rem;
+  }
+  .pkg-meta-bar span {
+    font-size: .74rem;
+    padding: .28rem .7rem;
+  }
+  .breadcrumb {
+    font-size: .72rem;
+    gap: .35rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  /* ── Package detail grid ── */
+  .pkg-detail-grid {
+    padding: 1.75rem 0 3rem;
+    gap: 1.75rem;
+  }
+
+  /* ── Gallery ── */
+  .pkg-gallery-thumbs {
+    grid-template-columns: 1fr 1fr;
+    gap: .4rem;
+    margin-bottom: 1.75rem;
+    border-radius: 8px;
+  }
+  .pkg-gallery-thumbs img:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+  .pkg-gallery-thumbs img {
+    aspect-ratio: 4/3;
+    border-radius: 4px;
+  }
+
+  /* ── Inclusions / exclusions ── */
+  .incl-excl-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .incl-box {
+    padding: 1.1rem;
+  }
+  .incl-box h3 {
+    font-size: 1.05rem;
+    margin-bottom: .75rem;
+    padding-bottom: .6rem;
+  }
+  .incl-box li {
+    font-size: .83rem;
+    gap: .45rem;
+  }
+
+  /* ── Itinerary ── */
+  .itinerary-day {
+    padding: 1.1rem 1rem 1.1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+  }
+  .itinerary-day h3 {
+    font-size: 1.1rem;
+  }
+  .itinerary-day p {
+    font-size: .84rem;
+    line-height: 1.65;
+  }
+  .day-label {
+    font-size: .63rem;
+  }
+
+  /* ── Booking sidebar ── */
+  .booking-sidebar {
+    border-radius: 10px;
+  }
+  .sidebar-top {
+    padding: 1.1rem 1rem;
+    border-radius: 10px 10px 0 0;
+  }
+  .sidebar-top .price-val {
+    font-size: 2rem;
+  }
+  .sidebar-body {
+    padding: 1rem;
+  }
+  .booking-form input,
+  .booking-form select,
+  .sidebar-body input,
+  .sidebar-body select {
+    padding: .72rem .85rem;
+    font-size: .88rem;
+  }
+  .sidebar-features {
+    padding: .9rem 1rem 1rem;
+    gap: .65rem;
+  }
+  .sidebar-feature {
+    font-size: .8rem;
+    gap: .55rem;
+  }
+  .sidebar-divider {
+    font-size: .74rem;
+    margin: .75rem 0;
+  }
+  .btn-call-direct {
+    font-size: .84rem;
+    padding: .72rem .85rem;
+  }
+
+  /* ── Hotel table ── */
+  table {
+    font-size: .78rem;
+  }
+  table th, table td {
+    padding: .6rem .7rem;
+  }
 }
 @media print { .site-header,.wa-float,.hero-scroll-hint,.cta-banner { display:none !important; } }

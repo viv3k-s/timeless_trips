@@ -80,18 +80,19 @@
   <div class="container">
 
     <!-- Filter tags -->
-    <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center">
-      <span style="padding:.4rem 1rem;background:var(--gold);color:var(--dark);border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer">All</span>
-      <span style="padding:.4rem 1rem;border:1px solid var(--border);border-radius:20px;font-size:.8rem;cursor:pointer">Beach</span>
-      <span style="padding:.4rem 1rem;border:1px solid var(--border);border-radius:20px;font-size:.8rem;cursor:pointer">Adventure</span>
-      <span style="padding:.4rem 1rem;border:1px solid var(--border);border-radius:20px;font-size:.8rem;cursor:pointer">Luxury</span>
-      <span style="padding:.4rem 1rem;border:1px solid var(--border);border-radius:20px;font-size:.8rem;cursor:pointer">Romance</span>
-      <span style="padding:.4rem 1rem;border:1px solid var(--border);border-radius:20px;font-size:.8rem;cursor:pointer">Culture</span>
+    <div class="pkg-filter-bar" id="intlFilterBar">
+      <button class="pkg-filter-btn active" data-filter="all">All</button>
+      <button class="pkg-filter-btn" data-filter="beach">🏖 Beach</button>
+      <button class="pkg-filter-btn" data-filter="adventure">🧗 Adventure</button>
+      <button class="pkg-filter-btn" data-filter="luxury">💎 Luxury</button>
+      <button class="pkg-filter-btn" data-filter="romance">❤️ Romance</button>
+      <button class="pkg-filter-btn" data-filter="culture">🏛 Culture</button>
     </div>
 
-    <div class="packages-grid">
+    <div class="packages-grid" id="intlPackagesGrid">
 
-      <article class="pkg-card">
+      <!-- Vietnam: Beach + Culture + Adventure -->
+      <article class="pkg-card" data-cats="beach culture adventure">
         <a href="vietnam.html" class="pkg-img-link">
           <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80" alt="Vietnam tour package" loading="lazy" />
           <span class="pkg-badge">Trending</span>
@@ -102,44 +103,47 @@
           <p class="pkg-desc">Ha Long Bay, Hanoi's old quarter, Hoi An's lantern streets and Ho Chi Minh's history — Vietnam in full glory.</p>
           <div class="pkg-footer">
             <div class="pkg-price"><span class="price-from">Starting from</span><span class="price-val">₹34,999<span class="price-per">/person</span></span></div>
-            <div class="pkg-actions"><a href="vietnam.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I'm+interested+in+the+Vietnam+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
+            <div class="pkg-actions"><a href="vietnam.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+the+Vietnam+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
           </div>
         </div>
       </article>
 
-      <article class="pkg-card">
+      <!-- Dubai: Luxury + Culture + Adventure -->
+      <article class="pkg-card" data-cats="luxury culture adventure">
         <a href="dubai-5n6d.html" class="pkg-img-link">
           <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80" alt="Dubai tour package" loading="lazy" />
           <span class="pkg-badge pkg-badge--luxury">Luxury</span>
         </a>
         <div class="pkg-body">
-          <div class="pkg-meta"><span>🌍 Middle East</span><span>4N / 5D</span></div>
+          <div class="pkg-meta"><span>🌍 Middle East</span><span>5N / 6D</span></div>
           <h3 class="pkg-title"><a href="dubai-5n6d.html">Dubai Extravaganza — 5N/6D</a></h3>
           <p class="pkg-desc">Burj Khalifa, Desert Safari, Dubai Mall, Palm Jumeirah and the iconic skyline — the city of superlatives.</p>
           <div class="pkg-footer">
             <div class="pkg-price"><span class="price-from">Starting from</span><span class="price-val">₹55,000<span class="price-per"> for 2</span></span></div>
-            <div class="pkg-actions"><a href="dubai-5n6d.html" class="btn btn-sm btn-outline">View Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I'm+interested+in+the+Dubai+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
+            <div class="pkg-actions"><a href="dubai-5n6d.html" class="btn btn-sm btn-outline">View Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+the+Dubai+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
           </div>
         </div>
       </article>
 
-      <article class="pkg-card">
+      <!-- Thailand: Beach + Adventure + Culture -->
+      <article class="pkg-card" data-cats="beach adventure culture">
         <a href="pattaya-3n4d.html" class="pkg-img-link">
           <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&q=80" alt="Thailand tour package" loading="lazy" />
           <span class="pkg-badge">Popular</span>
         </a>
         <div class="pkg-body">
-          <div class="pkg-meta"><span>🌏 South East Asia</span><span>5N / 6D</span></div>
+          <div class="pkg-meta"><span>🌏 South East Asia</span><span>3N / 4D</span></div>
           <h3 class="pkg-title"><a href="pattaya-3n4d.html">Pattaya Luxury Escape — 3N/4D</a></h3>
-          <p class="pkg-desc">Bangkok's temples, Phuket's beaches, Krabi's limestone cliffs and Chiang Mai's night bazaars.</p>
+          <p class="pkg-desc">5-star Centara Grand Mirage, Coral Island speedboat, Thai Airways round-trip and pristine Andaman beaches.</p>
           <div class="pkg-footer">
             <div class="pkg-price"><span class="price-from">Starting from</span><span class="price-val">₹1,42,000<span class="price-per">/person</span></span></div>
-            <div class="pkg-actions"><a href="pattaya-3n4d.html" class="btn btn-sm btn-outline">View Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I'm+interested+in+the+Thailand+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
+            <div class="pkg-actions"><a href="pattaya-3n4d.html" class="btn btn-sm btn-outline">View Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+the+Thailand+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
           </div>
         </div>
       </article>
 
-      <article class="pkg-card">
+      <!-- Maldives: Beach + Romance + Luxury -->
+      <article class="pkg-card" data-cats="beach romance luxury">
         <a href="maldives.html" class="pkg-img-link">
           <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&q=80" alt="Maldives tour package" loading="lazy" />
           <span class="pkg-badge pkg-badge--romance">Romance</span>
@@ -150,14 +154,16 @@
           <p class="pkg-desc">Overwater bungalows, coral reefs, crystal lagoons and world-class snorkelling — paradise on earth.</p>
           <div class="pkg-footer">
             <div class="pkg-price"><span class="price-from">Starting from</span><span class="price-val">₹59,999<span class="price-per">/person</span></span></div>
-            <div class="pkg-actions"><a href="maldives.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I'm+interested+in+the+Maldives+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
+            <div class="pkg-actions"><a href="maldives.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+the+Maldives+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
           </div>
         </div>
       </article>
 
-      <article class="pkg-card">
+      <!-- Malaysia: Culture + Adventure + Beach -->
+      <article class="pkg-card" data-cats="culture adventure beach">
         <a href="malaysia.html" class="pkg-img-link">
           <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80" alt="Malaysia tour package" loading="lazy" />
+          <span class="pkg-badge">Trending</span>
         </a>
         <div class="pkg-body">
           <div class="pkg-meta"><span>🌏 South East Asia</span><span>5N / 6D</span></div>
@@ -165,12 +171,13 @@
           <p class="pkg-desc">Kuala Lumpur's Petronas Towers, Langkawi beaches, Penang's street food and Borneo's rainforests.</p>
           <div class="pkg-footer">
             <div class="pkg-price"><span class="price-from">Starting from</span><span class="price-val">₹32,999<span class="price-per">/person</span></span></div>
-            <div class="pkg-actions"><a href="malaysia.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I'm+interested+in+the+Malaysia+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
+            <div class="pkg-actions"><a href="malaysia.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+the+Malaysia+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
           </div>
         </div>
       </article>
 
-      <article class="pkg-card">
+      <!-- Bali: Beach + Romance + Adventure -->
+      <article class="pkg-card" data-cats="beach romance adventure">
         <a href="indonesia.html" class="pkg-img-link">
           <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80" alt="Bali Indonesia tour package" loading="lazy" />
           <span class="pkg-badge">Bestseller</span>
@@ -181,12 +188,13 @@
           <p class="pkg-desc">Ubud's rice terraces, Seminyak's beaches, Tanah Lot temple and Bali's renowned spa culture.</p>
           <div class="pkg-footer">
             <div class="pkg-price"><span class="price-from">Starting from</span><span class="price-val">₹31,999<span class="price-per">/person</span></span></div>
-            <div class="pkg-actions"><a href="indonesia.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I'm+interested+in+the+Bali+%26+Indonesia+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
+            <div class="pkg-actions"><a href="indonesia.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+the+Bali+%26+Indonesia+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
           </div>
         </div>
       </article>
 
-      <article class="pkg-card">
+      <!-- Europe: Culture + Luxury + Adventure -->
+      <article class="pkg-card" data-cats="culture luxury adventure">
         <a href="europe.html" class="pkg-img-link">
           <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80" alt="Europe tour package" loading="lazy" />
           <span class="pkg-badge pkg-badge--luxury">Grand Tour</span>
@@ -197,11 +205,18 @@
           <p class="pkg-desc">Paris, Amsterdam, Switzerland, Italy and more — a grand sweep across the continent's finest cities.</p>
           <div class="pkg-footer">
             <div class="pkg-price"><span class="price-from">Starting from</span><span class="price-val">₹1,09,999<span class="price-per">/person</span></span></div>
-            <div class="pkg-actions"><a href="europe.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I'm+interested+in+the+Europe+Grand+Tour+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
+            <div class="pkg-actions"><a href="europe.html" class="btn btn-sm btn-outline">Details</a><a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+the+Europe+Grand+Tour+package." class="btn btn-sm btn-wa" target="_blank" rel="noopener">Enquire</a></div>
           </div>
         </div>
       </article>
 
+    </div>
+
+    <!-- Empty state when no filter match -->
+    <div id="intlNoResults" style="display:none;text-align:center;padding:3rem 1rem;color:var(--muted)">
+      <div style="font-size:2.5rem;margin-bottom:.75rem">🔍</div>
+      <p style="font-size:1rem;font-weight:500">No packages found for this category.</p>
+      <p style="font-size:.88rem;margin-top:.4rem">Try a different filter or <a href="booking.html" style="color:var(--teal);font-weight:600">get a custom quote</a>.</p>
     </div>
   </div>
 </section>
@@ -303,6 +318,91 @@
 <a href="https://api.whatsapp.com/send/?phone=918396000504&text=Hi!+I%27m+interested+in+your+travel+packages." class="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
+<style>
+/* ── Package Filter Bar ── */
+.pkg-filter-bar {
+  display: flex;
+  gap: .55rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+}
+.pkg-filter-btn {
+  padding: .42rem 1.1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  font-size: .82rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fff;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  transition: background .2s, color .2s, border-color .2s, transform .15s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.pkg-filter-btn:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  transform: translateY(-1px);
+}
+.pkg-filter-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--dark);
+  font-weight: 700;
+}
+/* card hide/show animation */
+.pkg-card[data-cats] {
+  transition: opacity .25s ease, transform .25s ease;
+}
+.pkg-card.filtered-out {
+  display: none;
+}
+@media (max-width: 480px) {
+  .pkg-filter-bar { gap: .4rem; justify-content: flex-start; padding: 0 .25rem; }
+  .pkg-filter-btn { font-size: .78rem; padding: .38rem .85rem; }
+}
+</style>
+
+<script>
+(function () {
+  var bar   = document.getElementById('intlFilterBar');
+  var grid  = document.getElementById('intlPackagesGrid');
+  var empty = document.getElementById('intlNoResults');
+  if (!bar || !grid) return;
+
+  var btns  = bar.querySelectorAll('.pkg-filter-btn');
+  var cards = grid.querySelectorAll('.pkg-card[data-cats]');
+
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filter = btn.getAttribute('data-filter');
+
+      // update active button
+      btns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      // filter cards
+      var visible = 0;
+      cards.forEach(function (card) {
+        var cats = card.getAttribute('data-cats') || '';
+        var show = (filter === 'all') || cats.split(' ').indexOf(filter) !== -1;
+        if (show) {
+          card.classList.remove('filtered-out');
+          visible++;
+        } else {
+          card.classList.add('filtered-out');
+        }
+      });
+
+      // empty state
+      if (empty) empty.style.display = (visible === 0) ? 'block' : 'none';
+    });
+  });
+})();
+</script>
+
 <script src="main.js"></script>
 </body>
 </html>
