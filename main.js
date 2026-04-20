@@ -185,7 +185,7 @@
       btn.innerHTML = '&#8987; Sending…';
 
       // Build WA message
-      let waMsg = `Hi! I'm *${name}* and I'm interested in *${pkg}*.`;
+      let waMsg = `Hi! I'm *${name}* and I'm interested in *${pkg.replace(/&amp;/g,'&').replace(/&#[0-9]+;/g,'')}*.`;
       if (dates)   waMsg += ` Travel date: ${dates}.`;
       if (pax)     waMsg += ` Travellers: ${pax}.`;
       if (message) waMsg += ` Note: ${message}.`;
